@@ -4,14 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kings of the Green | The Missing E in LIV</title>
+    <meta name="description" content="Kings of the Green — Junior Gladiators on the Fairway. The entertainment engine that completes LIV Golf.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lato:wght@300;400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lato:wght@300;400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet">
     <style>
+        /* ═══════════════════════════════════════
+           ROOT & RESET
+        ═══════════════════════════════════════ */
         :root {
             --navy: #0D1B2A;
             --deep: #050E18;
             --dark-green: #0B2218;
+            --emerald: #1A3A2A;
             --gold: #C9A84C;
             --gold-light: #E8D5A3;
             --gold-dim: #7A6230;
@@ -19,8 +24,9 @@
             --grey: #8A8A7E;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
+        *, *::before, *::after {
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
         html { scroll-behavior: smooth; }
 
         body {
@@ -28,6 +34,7 @@
             font-family: 'Lato', sans-serif;
             color: var(--white);
             overflow-x: hidden;
+            line-height: 1.75;
         }
 
         /* ═══════════════════════════════════════
@@ -42,1070 +49,676 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 36px;
+            gap: 28px;
             padding: 40px;
+            transition: opacity 1s ease, visibility 1s ease;
         }
-
+        #gate.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
         .gate-eyebrow {
             font-family: 'Lato', sans-serif;
-            font-size: 0.6rem;
-            letter-spacing: 10px;
+            font-size: 0.55rem;
+            letter-spacing: 12px;
             color: var(--gold-dim);
             text-transform: uppercase;
         }
-
         .gate-title {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(3rem, 9vw, 6rem);
+            font-size: clamp(2.8rem, 8vw, 5.5rem);
             font-weight: 900;
             color: var(--gold);
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             text-transform: uppercase;
             text-align: center;
             line-height: 0.95;
-            text-shadow: 0 0 80px rgba(201,168,76,0.2);
+            text-shadow: 0 4px 30px rgba(201,168,76,0.3);
         }
-
-        .gate-rule { width: 60px; height: 1px; background: var(--gold-dim); }
-
-        .gate-sub {
+        .gate-subtitle {
             font-family: 'Cormorant Garamond', serif;
             font-style: italic;
-            font-size: 1.1rem;
-            color: var(--grey);
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            color: var(--gold-light);
             letter-spacing: 2px;
-            text-align: center;
         }
-
-        #gate-form {
+        .gate-input-wrap {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 14px;
-            width: 100%;
-            max-width: 320px;
+            gap: 16px;
+            margin-top: 12px;
         }
-
-        #pw-input {
-            width: 100%;
+        #gateInput {
             background: transparent;
-            border: none;
-            border-bottom: 1px solid var(--gold-dim);
-            padding: 14px 4px;
+            border: 1px solid var(--gold-dim);
+            color: var(--gold);
             font-family: 'Lato', sans-serif;
-            font-size: 1rem;
-            letter-spacing: 6px;
-            color: var(--gold-light);
-            text-align: center;
+            font-size: 0.85rem;
+            letter-spacing: 8px;
             text-transform: uppercase;
+            text-align: center;
+            padding: 14px 32px;
+            width: 280px;
             outline: none;
             transition: border-color 0.3s;
         }
-        #pw-input::placeholder { color: var(--gold-dim); letter-spacing: 3px; font-size: 0.7rem; }
-        #pw-input:focus { border-bottom-color: var(--gold); }
-
-        #gate-form button {
-            margin-top: 6px;
+        #gateInput:focus {
+            border-color: var(--gold);
+        }
+        #gateInput::placeholder {
+            color: var(--gold-dim);
+            letter-spacing: 4px;
+            font-size: 0.7rem;
+        }
+        .gate-btn {
             background: transparent;
-            border: 1px solid var(--gold);
+            border: 1px solid var(--gold-dim);
             color: var(--gold);
             font-family: 'Lato', sans-serif;
             font-size: 0.65rem;
             letter-spacing: 6px;
             text-transform: uppercase;
-            padding: 14px 44px;
+            padding: 12px 40px;
             cursor: pointer;
             transition: all 0.3s;
         }
-        #gate-form button:hover { background: var(--gold); color: var(--deep); }
-
-        #pw-error {
+        .gate-btn:hover {
+            background: var(--gold);
+            color: var(--deep);
+        }
+        .gate-error {
             color: #c0392b;
             font-size: 0.7rem;
             letter-spacing: 3px;
-            text-transform: uppercase;
-            min-height: 16px;
+            min-height: 18px;
         }
 
         /* ═══════════════════════════════════════
            MAIN CONTENT
         ═══════════════════════════════════════ */
-        #main { display: none; }
-
-        /* Fixed bg layer */
-        #bg-layer {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            transition: background-image 0.9s ease;
+        #mainContent {
+            display: none;
         }
-        #bg-veil {
-            position: fixed;
-            inset: 0;
-            z-index: 1;
-            background: rgba(5, 14, 24, 0.72);
-            pointer-events: none;
+        #mainContent.visible {
+            display: block;
         }
 
-        /* Nav dots */
-        #nav-dots {
+        /* ═══════════════════════════════════════
+           NAV DOTS
+        ═══════════════════════════════════════ */
+        .nav-dots {
             position: fixed;
             right: 24px;
             top: 50%;
             transform: translateY(-50%);
-            z-index: 200;
+            z-index: 100;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
-        .ndot {
-            width: 5px; height: 5px;
+        .nav-dot {
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
-            background: var(--gold-dim);
+            border: 1px solid var(--gold-dim);
+            background: transparent;
             cursor: pointer;
             transition: all 0.3s;
         }
-        .ndot.active { background: var(--gold); transform: scale(1.8); }
-
-        /* ─── ALL SECTIONS ─── */
-        section {
-            position: relative;
-            z-index: 2;
-            min-height: 100vh;
-        }
-
-        /* ─── CINEMATIC OPENING ─── */
-        #s-opening {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 80px 20px;
-            gap: 20px;
-        }
-
-        #s-opening .o-eyebrow {
-            font-size: 0.6rem;
-            letter-spacing: 10px;
-            color: var(--gold-dim);
-            text-transform: uppercase;
-            animation: fadeUp 1.4s ease 0.4s both;
-        }
-
-        #s-opening h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(4rem, 13vw, 9rem);
-            font-weight: 900;
-            color: var(--gold);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            line-height: 0.92;
-            text-shadow: 0 0 100px rgba(201,168,76,0.2);
-            animation: fadeUp 1.4s ease 0.6s both;
-        }
-
-        #s-opening .o-tagline {
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-            font-size: clamp(1.1rem, 2.5vw, 1.7rem);
-            color: var(--gold-light);
-            letter-spacing: 2px;
-            animation: fadeUp 1.4s ease 0.9s both;
-        }
-
-        #s-opening .o-sub {
-            font-family: 'Lato', sans-serif;
-            font-size: clamp(0.75rem, 1.5vw, 0.9rem);
-            letter-spacing: 4px;
-            color: var(--grey);
-            text-transform: uppercase;
-            animation: fadeUp 1.4s ease 1.2s both;
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 36px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            animation: fadeUp 1.4s ease 1.6s both;
-        }
-        .scroll-indicator span { font-size: 0.55rem; letter-spacing: 5px; color: var(--gold-dim); text-transform: uppercase; }
-        .scroll-line { width: 1px; height: 48px; background: linear-gradient(to bottom, var(--gold-dim), transparent); animation: scrollBob 2s ease-in-out infinite; }
-
-        /* ─── STORY SECTIONS (shared) ─── */
-        .story-section {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 0;
-        }
-
-        .story-inner {
-            max-width: 780px;
-            padding: 100px 80px 100px 10%;
-        }
-
-        /* Right-aligned variant */
-        .story-section.align-right { justify-content: flex-end; }
-        .story-section.align-right .story-inner { padding: 100px 10% 100px 80px; }
-
-        /* Center variant */
-        .story-section.align-center { justify-content: center; }
-        .story-section.align-center .story-inner { padding: 100px 10%; text-align: center; max-width: 860px; }
-
-        .s-label {
-            display: block;
-            font-size: 0.58rem;
-            letter-spacing: 8px;
-            color: var(--gold-dim);
-            text-transform: uppercase;
-            margin-bottom: 18px;
-        }
-
-        .s-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.4rem, 6vw, 4.8rem);
-            font-weight: 900;
-            color: var(--gold);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            line-height: 1.0;
-            margin-bottom: 28px;
-        }
-
-        .s-rule { width: 50px; height: 2px; background: var(--gold); margin-bottom: 28px; }
-        .story-section.align-center .s-rule { margin-left: auto; margin-right: auto; }
-
-        .s-lead {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1.2rem, 2.2vw, 1.65rem);
-            font-style: italic;
-            color: var(--gold-light);
-            line-height: 1.55;
-            margin-bottom: 28px;
-        }
-
-        .s-body {
-            font-family: 'Lato', sans-serif;
-            font-size: clamp(1rem, 1.6vw, 1.15rem);
-            font-weight: 400;
-            color: #B8B8AC;
-            line-height: 2.0;
-            margin-bottom: 22px;
-        }
-
-        .s-body strong {
-            color: var(--gold-light);
-            font-weight: 700;
-        }
-
-        .s-quote {
-            border-left: 2px solid var(--gold);
-            padding: 14px 0 14px 24px;
-            margin: 32px 0;
-        }
-        .story-section.align-center .s-quote {
-            border-left: none;
-            border-top: 1px solid rgba(201,168,76,0.3);
-            border-bottom: 1px solid rgba(201,168,76,0.3);
-            padding: 28px 0;
-            margin: 36px 0;
-        }
-
-        .s-quote p {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: clamp(1.05rem, 1.8vw, 1.35rem);
-            color: var(--gold-light);
-            line-height: 1.65;
-        }
-
-        /* ─── FULL BLEED STATEMENT SLIDES ─── */
-        .statement-slide {
-            min-height: 70vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 80px 15%;
-        }
-
-        .statement-slide p {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.8rem, 4.5vw, 3.4rem);
-            font-style: italic;
-            font-weight: 400;
-            color: var(--gold-light);
-            line-height: 1.4;
-            max-width: 820px;
-        }
-
-        /* ─── STATS GRID ─── */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 32px;
-            padding: 40px 0;
-            margin: 36px 0;
-            border-top: 1px solid rgba(201,168,76,0.12);
-            border-bottom: 1px solid rgba(201,168,76,0.12);
-        }
-
-        .sg-item { text-align: center; }
-        .sg-num {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 700;
-            color: var(--gold);
-            display: block;
-            line-height: 1;
-            margin-bottom: 8px;
-        }
-        .sg-label {
-            font-size: 0.6rem;
-            letter-spacing: 3px;
-            color: var(--grey);
-            text-transform: uppercase;
-        }
-
-        /* ─── CARD FEATURE ─── */
-        .card-feature {
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 48px;
-            align-items: center;
-            margin-top: 44px;
-        }
-
-        .card-feature img {
-            width: 100%;
-            border: 1px solid rgba(201,168,76,0.18);
-            box-shadow: 0 24px 64px rgba(0,0,0,0.7);
-        }
-
-        .cft h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
-            color: var(--gold);
-            margin-bottom: 14px;
-        }
-        .cft p {
-            font-size: 0.95rem;
-            font-weight: 300;
-            color: var(--grey);
-            line-height: 1.9;
-            margin-bottom: 14px;
-        }
-        .cft .tag {
-            font-size: 0.6rem;
-            letter-spacing: 3px;
-            color: var(--gold-dim);
-            text-transform: uppercase;
-        }
-
-        /* ─── CLOSING ─── */
-        #s-closing {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 100px 10%;
-            gap: 28px;
-            background: linear-gradient(to bottom, transparent 0%, rgba(5,14,24,0.6) 60%, var(--deep) 100%);
-        }
-
-        .live-wrap {
-            display: flex;
-            align-items: baseline;
-            justify-content: center;
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(5rem, 16vw, 11rem);
-            font-weight: 900;
-            letter-spacing: -2px;
-            line-height: 1;
-        }
-
-        .live-wrap .ltr { color: var(--gold); }
-        .live-wrap .ltr-ghost {
-            color: transparent;
-            -webkit-text-stroke: 2px var(--gold-dim);
-            transition: all 0.8s ease;
-        }
-        .live-wrap .ltr-lit {
-            color: var(--gold);
-            text-shadow: 0 0 50px rgba(201,168,76,0.7), 0 0 100px rgba(201,168,76,0.3);
-            animation: eBlaze 1s ease both;
-        }
-
-        .closing-divider {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin: 4px 0;
-        }
-        .closing-divider span {
-            font-size: 0.58rem;
-            letter-spacing: 6px;
-            color: var(--gold-dim);
-            text-transform: uppercase;
-        }
-        .closing-divider::before,
-        .closing-divider::after {
-            content: '';
-            width: 48px;
-            height: 1px;
-            background: var(--gold-dim);
-        }
-
-        .closing-lead {
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-            color: var(--gold-light);
-            max-width: 680px;
-            line-height: 1.6;
-        }
-
-        .closing-body {
-            font-family: 'Lato', sans-serif;
-            font-size: clamp(0.88rem, 1.4vw, 1.05rem);
-            font-weight: 300;
-            color: var(--grey);
-            max-width: 620px;
-            line-height: 2.0;
-        }
-
-        .closing-body strong { color: var(--gold-light); font-weight: 700; }
-
-        .closing-manifesto {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: clamp(1rem, 2vw, 1.3rem);
-            color: var(--gold-light);
-            max-width: 640px;
-            line-height: 1.7;
-            border-top: 1px solid rgba(201,168,76,0.2);
-            border-bottom: 1px solid rgba(201,168,76,0.2);
-            padding: 28px 0;
-        }
-
-        .closing-sig {
-            font-size: 0.6rem;
-            letter-spacing: 5px;
-            color: var(--gold-dim);
-            text-transform: uppercase;
-            margin-top: 8px;
-        }
-
-        /* ─── REVEAL ANIMATIONS ─── */
-        .reveal {
-            opacity: 0;
-            transform: translateY(36px);
-            transition: opacity 0.95s ease, transform 0.95s ease;
-        }
-        .reveal.in { opacity: 1; transform: none; }
-        .rd1 { transition-delay: 0.08s; }
-        .rd2 { transition-delay: 0.22s; }
-        .rd3 { transition-delay: 0.38s; }
-        .rd4 { transition-delay: 0.54s; }
-        .rd5 { transition-delay: 0.70s; }
-        .rd6 { transition-delay: 0.86s; }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(28px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes scrollBob {
-            0%,100% { opacity: 0.3; transform: scaleY(1); }
-            50%      { opacity: 1;   transform: scaleY(1.15); }
-        }
-        @keyframes eBlaze {
-            from { opacity: 0; transform: scale(1.3); text-shadow: none; }
-            to   { opacity: 1; transform: scale(1); }
-        }
-
-        /* ─── RYDER CUP TEAM GRID ─── */
-        .team-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 36px 0;
-        }
-
-        .team-card {
-            border: 1px solid rgba(201,168,76,0.2);
-            padding: 24px 20px;
-            background: rgba(5,14,24,0.6);
-            position: relative;
-        }
-
-        .team-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 3px; height: 100%;
+        .nav-dot.active {
             background: var(--gold);
+            border-color: var(--gold);
+            box-shadow: 0 0 12px rgba(201,168,76,0.5);
+        }
+        .nav-dot:hover {
+            border-color: var(--gold);
         }
 
-        .team-card .tc-role {
-            font-size: 0.6rem;
-            letter-spacing: 5px;
-            color: var(--gold-dim);
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .team-card .tc-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--gold);
-            margin-bottom: 8px;
-        }
-
-        .team-card .tc-desc {
-            font-size: 0.88rem;
-            font-weight: 300;
-            color: var(--grey);
-            line-height: 1.7;
-        }
-
-        /* ─── GAUNTLET LIVE DISPLAY ─── */
-        .gauntlet-hud {
-            background: rgba(5,14,24,0.85);
-            border: 1px solid rgba(201,168,76,0.25);
-            padding: 32px;
-            margin: 36px 0;
+        /* ═══════════════════════════════════════
+           CINEMATIC SCENES
+        ═══════════════════════════════════════ */
+        .scene {
             position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
         }
-
-        .gauntlet-hud::before {
-            content: '● LIVE';
+        .scene-bg {
             position: absolute;
-            top: 14px; right: 18px;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 0;
+        }
+        .scene-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+        .scene-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .overlay-dark {
+            background: linear-gradient(to bottom, rgba(5,14,24,0.85) 0%, rgba(5,14,24,0.65) 40%, rgba(5,14,24,0.85) 100%);
+        }
+        .overlay-green {
+            background: linear-gradient(135deg, rgba(11,34,24,0.88) 0%, rgba(13,27,42,0.75) 50%, rgba(11,34,24,0.88) 100%);
+        }
+        .overlay-gold {
+            background: linear-gradient(to bottom, rgba(5,14,24,0.80) 0%, rgba(30,25,10,0.60) 50%, rgba(5,14,24,0.85) 100%);
+        }
+        .overlay-deep {
+            background: rgba(5,14,24,0.92);
+        }
+
+        /* ═══════════════════════════════════════
+           TYPOGRAPHY
+        ═══════════════════════════════════════ */
+        .whisper {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(0.85rem, 2vw, 1.1rem);
+            color: var(--grey);
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+        .pillar-label {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.55rem;
+            letter-spacing: 10px;
+            text-transform: uppercase;
+            color: var(--gold-dim);
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.1s;
+        }
+        .scene-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.2rem, 6vw, 4rem);
+            font-weight: 900;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            line-height: 1;
+            margin-bottom: 32px;
+            text-shadow: 0 4px 30px rgba(201,168,76,0.25);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.9s ease 0.2s;
+        }
+        .scene-title.jumbo {
+            font-size: clamp(3rem, 10vw, 7rem);
+            letter-spacing: 6px;
+        }
+        .narrative {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+            color: var(--white);
+            line-height: 2;
+            margin-bottom: 28px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.35s;
+        }
+        .narrative em {
+            color: var(--gold-light);
+            font-style: italic;
+        }
+        .narrative strong {
+            color: var(--gold);
+            font-weight: 600;
+        }
+        .pull-quote {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: clamp(1.3rem, 3vw, 2rem);
+            color: var(--gold);
+            line-height: 1.5;
+            margin: 40px 0;
+            padding: 0 20px;
+            border-left: 3px solid var(--gold-dim);
+            text-align: left;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.9s ease 0.4s;
+        }
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: var(--gold-dim);
+            margin: 32px auto;
+            opacity: 0;
+            transition: all 0.8s ease 0.3s;
+        }
+        .kicker {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--gold-dim);
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 0.8s ease 0.5s;
+        }
+
+        /* Reveal on scroll */
+        .scene.revealed .whisper,
+        .scene.revealed .pillar-label,
+        .scene.revealed .scene-title,
+        .scene.revealed .narrative,
+        .scene.revealed .pull-quote,
+        .scene.revealed .divider,
+        .scene.revealed .kicker {
+            opacity: 1;
+            transform: translateY(0) translateX(0);
+        }
+
+        /* ═══════════════════════════════════════
+           LIVE LOGO & ROOKIE CARD
+        ═══════════════════════════════════════ */
+        .live-logo-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 30px auto;
+        }
+        .live-logo-wrap img {
+            max-height: 100px;
+            width: auto;
+        }
+        .card-showcase {
+            margin: 40px auto;
+            max-width: 320px;
+        }
+        .card-showcase img {
+            width: 100%;
+            height: auto;
+            border: 2px solid var(--gold-dim);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(201,168,76,0.1);
+        }
+
+        /* ═══════════════════════════════════════
+           FOOTER
+        ═══════════════════════════════════════ */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--deep);
+            border-top: 1px solid rgba(201,168,76,0.1);
+        }
+        footer p {
+            font-family: 'Lato', sans-serif;
             font-size: 0.6rem;
             letter-spacing: 4px;
-            color: #e74c3c;
-            font-weight: 700;
-            animation: livePulse 1.8s ease-in-out infinite;
-        }
-
-        @keyframes livePulse {
-            0%,100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        .gauntlet-hud .hud-title {
-            font-size: 0.6rem;
-            letter-spacing: 7px;
             color: var(--gold-dim);
             text-transform: uppercase;
-            margin-bottom: 20px;
         }
 
-        .hud-stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-        }
-
-        .hud-stat {
-            text-align: center;
-            padding: 16px 8px;
-            border: 1px solid rgba(201,168,76,0.12);
-        }
-
-        .hud-stat .hs-val {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.4rem, 2.5vw, 2rem);
-            font-weight: 700;
-            color: var(--gold);
-            display: block;
-            line-height: 1;
-            margin-bottom: 6px;
-        }
-
-        .hud-stat .hs-label {
-            font-size: 0.6rem;
-            letter-spacing: 2px;
-            color: var(--grey);
-            text-transform: uppercase;
-            line-height: 1.4;
-        }
-
-        /* ─── ROOKIE CARD FEATURE UPGRADED ─── */
-        .rookie-feature {
-            display: grid;
-            grid-template-columns: 1.1fr 1fr;
-            gap: 48px;
-            align-items: start;
-            margin: 40px 0;
-        }
-
-        .rookie-feature img {
-            width: 100%;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 40px rgba(201,168,76,0.1);
-        }
-
-        .rf-text h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.3rem, 2vw, 1.7rem);
-            color: var(--gold);
-            margin-bottom: 14px;
-            line-height: 1.2;
-        }
-
-        .rf-text p {
-            font-size: clamp(0.92rem, 1.4vw, 1.05rem);
-            font-weight: 400;
-            color: #B8B8AC;
-            line-height: 1.9;
-            margin-bottom: 14px;
-        }
-
-        .rf-text p strong { color: var(--gold-light); font-weight: 700; }
-
-        .rf-text .rf-tag {
-            display: inline-block;
-            border: 1px solid rgba(201,168,76,0.3);
-            padding: 6px 16px;
-            font-size: 0.6rem;
-            letter-spacing: 3px;
-            color: var(--gold-dim);
-            text-transform: uppercase;
-            margin-top: 8px;
-        }
-
-        /* ─── RESPONSIVE ─── */
+        /* ═══════════════════════════════════════
+           RESPONSIVE
+        ═══════════════════════════════════════ */
         @media (max-width: 768px) {
-            .team-grid { grid-template-columns: 1fr; }
-            .hud-stats { grid-template-columns: 1fr 1fr; }
-            .rookie-feature { grid-template-columns: 1fr; }
-            .story-inner { padding: 80px 28px; }
-            .story-section.align-right .story-inner { padding: 80px 28px; }
-            .story-section.align-center .story-inner { padding: 80px 28px; }
-            .card-feature { grid-template-columns: 1fr; }
-            .stats-grid { grid-template-columns: 1fr 1fr; }
-            #nav-dots { display: none; }
-            .statement-slide { padding: 60px 8%; }
+            .scene-content { padding: 40px 24px; }
+            .nav-dots { right: 12px; gap: 10px; }
+            .nav-dot { width: 8px; height: 8px; }
+            .pull-quote { font-size: 1.1rem; padding: 0 12px; }
+            .card-showcase { max-width: 240px; }
         }
     </style>
 </head>
 <body>
 
-<!-- ══════════ PASSWORD GATE ══════════ -->
-<div id="gate">
-    <div class="gate-eyebrow">Private · Confidential · By Invitation Only</div>
-    <h1 class="gate-title">Kings<br>of the<br>Green</h1>
-    <div class="gate-rule"></div>
-    <p class="gate-sub">The future of golf is waiting behind this door.</p>
-    <form id="gate-form" onsubmit="checkPw(event)">
-        <input type="password" id="pw-input" placeholder="Enter Access Code" autocomplete="off" autofocus>
-        <button type="submit">Enter</button>
-        <div id="pw-error"></div>
-    </form>
-</div>
-
-<!-- ══════════ MAIN ══════════ -->
-<div id="main">
-
-    <div id="bg-layer"></div>
-    <div id="bg-veil"></div>
-
-    <div id="nav-dots">
-        <div class="ndot active" data-s="s-opening"></div>
-        <div class="ndot" data-s="s-p1"></div>
-        <div class="ndot" data-s="s-p2"></div>
-        <div class="ndot" data-s="s-p3"></div>
-        <div class="ndot" data-s="s-p4"></div>
-        <div class="ndot" data-s="s-closing"></div>
+    <!-- ═══════════════════════════════════════
+         PASSWORD GATE
+    ═══════════════════════════════════════ -->
+    <div id="gate">
+        <p class="gate-eyebrow">Confidential Concept Brief</p>
+        <h1 class="gate-title">Kings of<br>the Green</h1>
+        <p class="gate-subtitle">Junior Gladiators on the Fairway</p>
+        <div class="gate-input-wrap">
+            <input type="password" id="gateInput" placeholder="Enter Code" autocomplete="off">
+            <button class="gate-btn" id="gateBtn">Enter</button>
+            <p class="gate-error" id="gateError"></p>
+        </div>
     </div>
 
-    <!-- ════ OPENING ════ -->
-    <section id="s-opening" data-bg="empty-stands.webp">
-        <div class="o-eyebrow">A Kings of the Green Presentation · Confidential</div>
-        <h1>Kings<br>of the<br>Green</h1>
-        <div class="o-tagline">Junior Gladiators on the Fairway.</div>
-        <div class="o-sub">The Missing E in LIV · The Entertainment Engine That Makes It LIVE</div>
-        <div class="scroll-indicator">
-            <span>The Story</span>
-            <div class="scroll-line"></div>
-        </div>
-    </section>
+    <!-- ═══════════════════════════════════════
+         MAIN CONTENT
+    ═══════════════════════════════════════ -->
+    <div id="mainContent">
 
-    <!-- ════ PILLAR 1: THE VACUUM ════ -->
-    <section id="s-p1" class="story-section" data-bg="empty-stands.webp">
-        <div class="story-inner">
-            <span class="s-label reveal">Pillar One · Identification of the Vacuum</span>
-            <h2 class="s-title reveal rd1">The<br>Vacuum</h2>
-            <div class="s-rule reveal rd2"></div>
-            <p class="s-lead reveal rd2">
-                "The Kings are collecting checks.<br>The Gladiators are collecting range balls."
-            </p>
-            <p class="s-body reveal rd3">
-                A billion dollars invested. The most talented roster ever assembled in professional golf. Names that have defined the sport for two decades. And on any given Sunday afternoon — you can hear the wind moving through <strong>empty grandstands.</strong>
-            </p>
-            <p class="s-body reveal rd3">
-                Here is the truth no one in the building wants to say out loud: <strong>LIV has the Kings. What it doesn't have is a reason for America to care.</strong> It doesn't have a story still being written. It doesn't have a character the crowd stayed up late to find out about. It doesn't have a Gladiator.
-            </p>
-            <div class="s-quote reveal rd4">
-                <p>"Somewhere on a municipal course right now — in Texas, in Arizona, in Georgia — a 17-year-old is hitting drives in the dark. 183 mph ball speed. 1.52 smash factor. Zero scouts watching. That kid is the story LIV has been missing since day one."</p>
+        <!-- NAV DOTS -->
+        <nav class="nav-dots" id="navDots">
+            <div class="nav-dot active" data-target="opening"></div>
+            <div class="nav-dot" data-target="vacuum"></div>
+            <div class="nav-dot" data-target="vacuum2"></div>
+            <div class="nav-dot" data-target="holyground"></div>
+            <div class="nav-dot" data-target="holyground2"></div>
+            <div class="nav-dot" data-target="kings"></div>
+            <div class="nav-dot" data-target="kings2"></div>
+            <div class="nav-dot" data-target="franchise"></div>
+            <div class="nav-dot" data-target="closing"></div>
+        </nav>
+
+        <!-- ═══════════════════════════════════
+             OPENING — NOBODY IS WATCHING
+        ═══════════════════════════════════ -->
+        <section class="scene" id="opening">
+            <div class="scene-bg" style="background-image: url('empty-stands.webp');"></div>
+            <div class="scene-overlay overlay-dark"></div>
+            <div class="scene-content">
+                <p class="whisper">Somewhere in America, right now...</p>
+                <h1 class="scene-title jumbo">Nobody<br>Is Watching</h1>
+                <div class="divider"></div>
+                <p class="narrative">
+                    There's a seventeen-year-old kid standing on a municipal driving range in Phoenix. The lights are about to shut off. His shoes are two seasons old. His driver was $40 at a thrift store. His dad worked a double shift today so he could come here and hit one more bucket before dark.
+                </p>
+                <p class="narrative">
+                    He doesn't have a swing coach. He doesn't have a sponsorship. He doesn't have a college scout in the bleachers or a father who belongs to the country club. What he has is a 310-yard carry and a dream that nobody in golf is building a road for.
+                </p>
+                <p class="narrative">
+                    <strong>The stands are empty. But his swing isn't.</strong>
+                </p>
             </div>
-            <p class="s-body reveal rd4">
-                This is the <strong>Forensic Scouting</strong> mission. Not country club pedigree. Not legacy invitations. Not whose father plays Pebble Beach. We are looking for Smash Factor, Launch Angle, and Carry Distance — the raw data that tells you a kid was built to compete at the highest level, and nobody gave him the stage to prove it.
-            </p>
-            <p class="s-body reveal rd5">
-                This is the <strong>Steph Curry Filter.</strong> The three-star recruit the old-world gatekeepers overlooked. The kid who didn't fit the profile. The one who went undrafted, unrecruited, unnoticed — until the right platform revealed exactly what he was worth. <strong>We find the 3-star recruit and give him the stage to prove he was a 5-star King all along.</strong>
-            </p>
-            <div class="stats-grid reveal rd5">
-                <div class="sg-item">
-                    <span class="sg-num">50M+</span>
-                    <span class="sg-label">US Junior Golfers</span>
-                </div>
-                <div class="sg-item">
-                    <span class="sg-num">16–35</span>
-                    <span class="sg-label">Target Demo, Untapped</span>
-                </div>
-                <div class="sg-item">
-                    <span class="sg-num">0</span>
-                    <span class="sg-label">Gladiator Pipelines<br>to LIV Today</span>
-                </div>
-                <div class="sg-item">
-                    <span class="sg-num">2027</span>
-                    <span class="sg-label">Season Window<br>to Act</span>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ════ STATEMENT: THE KID IN THE CAR TRUNK ════ -->
-    <section class="statement-slide" data-bg="range-balls.webp">
-        <div class="reveal">
-            <p>"The kid in the car trunk. The girl on the muni range. The teenager hitting balls into a chain-link fence at sunset while his parents work double shifts to keep the lights on. <em>Those are the Gladiators of the Fairway.</em> They don't need a trust fund. They don't need a country club. They need a stage."</p>
-        </div>
-    </section>
-
-    <!-- ════ PILLAR 2: HOLY GROUND ════ -->
-    <section id="s-p2" class="story-section align-right" data-bg="holy-ground.png">
-        <div class="story-inner">
-            <span class="s-label reveal">Pillar Two · The Gauntlet</span>
-            <h2 class="s-title reveal rd1">Holy<br>Ground</h2>
-            <div class="s-rule reveal rd2"></div>
-            <p class="s-lead reveal rd2">
-                "The missing E in LIV — the Entertainment engine that makes it <em>LIVE.</em>"
-            </p>
-            <p class="s-body reveal rd3">
-                Some people call it a golf course. <strong>We call it the Sacred Proving Ground where Gladiators are forged.</strong> The Kings of the Green Gauntlet is not a tournament. It is a trial. It is a cathedral. And every Gladiator who walks onto it is walking onto Holy Ground.
-            </p>
-            <p class="s-body reveal rd3">
-                We film it from the earth up. <strong>Titan Angle cameras</strong> — ground-level, framing each Gladiator against the open sky. The obstacles are massive, beautiful, and unforgiving. The fairway becomes a laboratory of character. Every bunker is an adversary. Every approach shot is either a coronation or a burial. <strong>We don't just film a game. We film a struggle.</strong>
-            </p>
-            <div class="s-quote reveal rd4">
-                <p>"This is where Dude Perfect energy meets MLB Statcast precision meets The Last Dance's narrative architecture. High-stakes. High-visibility. High-adrenaline. Twenty episodes of prime-time content — and every frame earns its place."</p>
-            </div>
-            <p class="s-body reveal rd4">
-                The Gauntlet runs in two stages. First: <strong>36-hole qualifying competitions at municipal courses and public ranges across America</strong> — the places where the gatekeepers aren't going. The scouts who never looked. The leaderboards that never made the news. Then: the televised finals. <strong>ABC/Disney. Prime time. The nation watching. One contract on the line.</strong>
-            </p>
-            <p class="s-body reveal rd5">
-                The prize is not just a check. It is a <strong>green jacket, a multi-year LIV contract</strong>, and a spot at the 2027 opening season alongside the Kings who built this league. Every Gladiator who falls short of the winner? Full academic scholarships and entry into LIV-sponsored junior leagues — because on Holy Ground, <strong>we don't waste talent.</strong>
-            </p>
-            <p class="s-body reveal rd5">
-                The seat was empty because no one had ever given the crowd a Gladiator worth standing up for. <strong>Holy Ground changes that forever.</strong>
-            </p>
-        </div>
-    </section>
-
-    <!-- ════ STATEMENT: THE GAUNTLET ════ -->
-    <section class="statement-slide" data-bg="weekly-grind.webp">
-        <div class="reveal">
-            <p>"We move between Tragedy and Triumph. Every week, a new story. Every episode, a new character. Every season, a new King born from the fire of the Gauntlet — and the grandstands will never be empty again."</p>
-        </div>
-    </section>
-
-    <!-- ════ PILLAR 3: KINGS & GLADIATORS — RYDER CUP FORMAT ════ -->
-    <section id="s-p3" class="story-section" data-bg="pass-torch.webp">
-        <div class="story-inner">
-            <span class="s-label reveal">Pillar Three · Activation &amp; The Coronation</span>
-            <h2 class="s-title reveal rd1">Kings<br>&amp; Gladiators</h2>
-            <div class="s-rule reveal rd2"></div>
-            <p class="s-lead reveal rd2">
-                "The King prepares the Prince. The crowd finally has a reason to stand."
-            </p>
-            <p class="s-body reveal rd3">
-                Here is how it works — and why it works. <strong>Every LIV King is paired with a Gladiator.</strong> Not a caddie. Not a brand ambassador. A <em>teammate.</em> They carry the same crest. They play under the same flag. And in the Ryder Cup team format, when the Gladiator wins — the King wins with him.
-            </p>
-            <p class="s-body reveal rd3">
-                This is the structure that transforms a league full of individual stars into a <strong>team sport with rivalries, storylines, and stakes that carry from week to week.</strong> Fans don't just root for a player. They root for a pair. They watch a relationship develop in real time. They see a veteran teach. They see a rookie learn. They see the exact moment the student becomes the King.
-            </p>
-
-            <!-- RYDER CUP TEAM GRID -->
-            <div class="team-grid reveal rd4">
-                <div class="team-card">
-                    <span class="tc-role">The King</span>
-                    <div class="tc-name">The Veteran</div>
-                    <p class="tc-desc">Phil. Bryson. Bubba. DJ. The men who sacrificed their PGA standing to build something new. Now they invest their legacy in a Gladiator — and the crowd that once booed them starts to cheer.</p>
-                </div>
-                <div class="team-card">
-                    <span class="tc-role">The Gladiator</span>
-                    <div class="tc-name">The Rookie</div>
-                    <p class="tc-desc">The kid from the muni range. Smash factor 1.51. Carry distance 312 yards. Zero scouts, zero sponsorships, zero country club connections. One Gauntlet win away from a LIV contract.</p>
-                </div>
-                <div class="team-card">
-                    <span class="tc-role">The Format</span>
-                    <div class="tc-name">Ryder Cup Style</div>
-                    <p class="tc-desc">Team scoring. Shared victory. Shared heartbreak. The drama of national pride — transferred to the drama of mentorship. Two generations. One crest. Every point matters.</p>
-                </div>
-                <div class="team-card">
-                    <span class="tc-role">The Prize</span>
-                    <div class="tc-name">The Coronation</div>
-                    <p class="tc-desc">The Legacy Pairings Championship opens the 2027 LIV season. The winning pair receives matching green jackets on the 18th green — and the King hands the Gladiator his putter. On live television. In front of the world.</p>
+        <!-- ═══════════════════════════════════
+             PILLAR 1 — THE VACUUM (Part 1)
+        ═══════════════════════════════════ -->
+        <section class="scene" id="vacuum">
+            <div class="scene-bg" style="background-image: url('range-balls.webp');"></div>
+            <div class="scene-overlay overlay-green"></div>
+            <div class="scene-content">
+                <p class="pillar-label">Pillar I</p>
+                <h2 class="scene-title">The Vacuum</h2>
+                <p class="narrative">
+                    Golf has a pipeline problem — and everybody knows it. The PGA Tour grooms players through a system built on privilege: private clubs, $60,000 junior travel circuits, college programs that recruit kids who've been coached since kindergarten. If your family can't write that check, you don't exist.
+                </p>
+                <p class="narrative">
+                    Meanwhile, LIV Golf built a kingdom for Kings. Massive purses. Global stages. Private jets. But the kingdom has no farm system. No feeder league. No path for the kid whose equipment lives in the trunk of a car.
+                </p>
+                <div class="pull-quote">
+                    "The Kings are collecting checks.<br>The Gladiators are collecting range balls."
                 </div>
             </div>
+        </section>
 
-            <div class="s-quote reveal rd5">
-                <p>"The veteran who spent years as a villain in American golf becomes the man who found the next generation. That's the content no one is making — not a highlight reel, not a press conference. A relationship. A passing of craft. <em>That's the moment that keeps those seats filled for a decade.</em>"</p>
+        <!-- ═══════════════════════════════════
+             PILLAR 1 — THE VACUUM (Part 2)
+        ═══════════════════════════════════ -->
+        <section class="scene" id="vacuum2">
+            <div class="scene-bg" style="background-image: url('weekly-grind.webp');"></div>
+            <div class="scene-overlay overlay-dark"></div>
+            <div class="scene-content">
+                <p class="whisper">Close your eyes. Picture her.</p>
+                <p class="narrative">
+                    There's a girl at a muni course in Houston. She's sixteen. She plays in jeans because she can't afford golf pants. She hits balls into a chain-link fence at sunset while her mother works the late shift at a hospital thirty minutes away. Nobody's filming her. Nobody's scouting her. The only sound is the crack of impact and the sprinklers kicking on behind her.
+                </p>
+                <p class="narrative">
+                    She can shape a 7-iron both ways. She reads greens like braille. She has never played a course with a clubhouse. And right now — <em>right now</em> — there is not a single professional league on Earth that has built a door for her to walk through.
+                </p>
+                <p class="narrative">
+                    <strong>These young would-be prodigies deserve a path to greatness.</strong> They deserve a league that looks past their upbringing and sees what's in their hands. A league that says: <em>we don't care where you came from. Show us where you're going.</em>
+                </p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ════ STATEMENT: THE TORCH ════ -->
-    <section class="statement-slide" data-bg="contract-sign.webp">
-        <div class="reveal">
-            <p>"A King's true power is not what he wins. It is what he builds after the winning is done — and whether there is someone worthy to receive it."</p>
-        </div>
-    </section>
+        <!-- ═══════════════════════════════════
+             PILLAR 2 — HOLY GROUND (Part 1)
+        ═══════════════════════════════════ -->
+        <section class="scene" id="holyground">
+            <div class="scene-bg" style="background-image: url('holy-ground.png');"></div>
+            <div class="scene-overlay overlay-gold"></div>
+            <div class="scene-content">
+                <p class="whisper">Some call it a golf course...</p>
+                <h2 class="scene-title jumbo">Holy Ground</h2>
+                <div class="divider"></div>
+                <p class="narrative">
+                    Imagine walking through a tunnel for the first time. Not a hallway — a <em>tunnel</em>. The kind where the light at the end isn't fluorescent. It's sunlight. It's a packed grandstand. It's a fairway cut so tight you can smell the earth underneath.
+                </p>
+                <p class="narrative">
+                    You're eighteen years old. Your heart is beating in your throat. Your hands are shaking around a grip you've held ten thousand times — but never like this. Never with cameras. Never with a legend standing beside you, whispering, <em>"Breathe. You belong here."</em>
+                </p>
+                <p class="narrative">
+                    This is where young Gladiators hone their craft on <strong>Holy Ground</strong> — where finding the bottom of the cup on every putt is the destination to greatness.
+                </p>
+            </div>
+        </section>
 
-    <!-- ════ PILLAR 4: THE GAUNTLET + ROOKIE CARD ════ -->
-    <section id="s-p4" class="story-section align-right" data-bg="hit-ball.png">
-        <div class="story-inner">
-            <span class="s-label reveal">Pillar Four · The Franchise Engine</span>
-            <h2 class="s-title reveal rd1">The Gauntlet<br>&amp; The Card</h2>
-            <div class="s-rule reveal rd2"></div>
-            <p class="s-lead reveal rd2">
-                "You don't just compete in the Gauntlet. You get measured by it. And those numbers follow you forever."
-            </p>
-            <p class="s-body reveal rd3">
-                The Holy Ground Gauntlet is not a standard golf course. It is a <strong>HoleyMoley-style proving ground</strong> — a course built for maximum television drama, with <strong>live distractions, crowd interference zones, and pressure obstacles</strong> designed to reveal exactly what a Gladiator is made of when the cameras are rolling and the crowd is loud and nothing goes according to plan.
-            </p>
-            <p class="s-body reveal rd3">
-                And while the Gladiator plays — the world watches the numbers. <strong>Every shot broadcast with real-time telemetry.</strong> Ball speed on screen before the ball lands. Carry distance the moment it stops. Smash factor. Launch angle. The audience doesn't just watch a swing — they understand it. They feel it. They argue about it. <strong>They become experts.</strong>
-            </p>
-
-            <!-- LIVE GAUNTLET HUD -->
-            <div class="gauntlet-hud reveal rd4">
-                <div class="hud-title">Holy Ground Gauntlet · Live Telemetry Display</div>
-                <div class="hud-stats">
-                    <div class="hud-stat">
-                        <span class="hs-val">183</span>
-                        <span class="hs-label">Ball Speed<br>MPH</span>
-                    </div>
-                    <div class="hud-stat">
-                        <span class="hs-val">1.52</span>
-                        <span class="hs-label">Smash<br>Factor</span>
-                    </div>
-                    <div class="hud-stat">
-                        <span class="hs-val">312</span>
-                        <span class="hs-label">Carry<br>Yards</span>
-                    </div>
-                    <div class="hud-stat">
-                        <span class="hs-val">94%</span>
-                        <span class="hs-label">Putt %<br>Under Pressure</span>
-                    </div>
+        <!-- ═══════════════════════════════════
+             PILLAR 2 — HOLY GROUND (Part 2)
+        ═══════════════════════════════════ -->
+        <section class="scene" id="holyground2">
+            <div class="scene-bg" style="background-image: url('hit-ball.png');"></div>
+            <div class="scene-overlay overlay-green"></div>
+            <div class="scene-content">
+                <p class="pillar-label">The NFL Combine of Golf</p>
+                <h2 class="scene-title">The Gauntlet</h2>
+                <p class="narrative">
+                    This is not a tournament. This is a <em>proving ground.</em> We measure everything the way the NFL Combine measures everything — because talent without data is just a rumor.
+                </p>
+                <p class="narrative">
+                    <strong>Swing speed.</strong> How fast can you move the club through the zone? <strong>Smash factor.</strong> How efficiently does energy transfer from face to ball? <strong>Launch angle.</strong> Can you optimize trajectory under pressure? <strong>Putt percentage.</strong> When the lights are on and the gallery is breathing — can you find the bottom of the cup?
+                </p>
+                <p class="narrative">
+                    Titan Angle cameras sit at ground level, framing a kid against the sky — not a bird's-eye drone shot that makes everyone look the same. You see the grass. You hear the strike. You feel the weight of the moment. Every swing is a story. Every putt is a verdict.
+                </p>
+                <div class="pull-quote">
+                    "LIV has the Kings. What it's missing is the LIVE.<br>The 'E' — Entertainment — is the engine that completes it."
                 </div>
             </div>
+        </section>
 
-            <p class="s-body reveal rd4">
-                Those numbers don't disappear when the round ends. <strong>They live on the Gladiator Rookie Card.</strong> Every stat from every Gauntlet appearance — serialized, holographic, issued by Upper Deck to collectors and fans who watched those numbers get made in real time.
-            </p>
+        <!-- ═══════════════════════════════════
+             PILLAR 3 — KINGS & GLADIATORS (Part 1)
+        ═══════════════════════════════════ -->
+        <section class="scene" id="kings">
+            <div class="scene-bg" style="background-image: url('pass-torch.webp');"></div>
+            <div class="scene-overlay overlay-dark"></div>
+            <div class="scene-content">
+                <p class="pillar-label">Pillar III</p>
+                <h2 class="scene-title">The King Prepares<br>the Prince</h2>
+                <div class="divider"></div>
+                <p class="narrative">
+                    Picture a LIV legend — a man who's won majors, carried nations, heard the roar of Sunday galleries on six continents — standing behind an eighteen-year-old on the practice green. Not coaching. <em>Mentoring.</em> Not correcting a grip. Building a life.
+                </p>
+                <p class="narrative">
+                    He puts a hand on the kid's shoulder. <em>"When I was your age, somebody gave me a shot. Nobody remembers who. But I do. Every single day."</em>
+                </p>
+                <p class="narrative">
+                    That's the format. Kings and Gladiators. Veterans paired with unknowns. Ryder Cup-style team competition where the King's legacy is measured not by trophies in the case — but by the Gladiator standing next to him on the 18th green.
+                </p>
+            </div>
+        </section>
 
-            <!-- ROOKIE CARD FEATURE -->
-            <div class="rookie-feature reveal rd5">
-                <img src="rooke-card.png" alt="Gladiator Rookie Card — Holy Ground Gauntlet 2027">
-                <div class="rf-text">
-                    <h3>The Gladiator Rookie Card</h3>
-                    <p>Upper Deck. Serialized. Holographic. <strong>Every stat from the Gauntlet — real numbers from the real performance</strong> that earned this kid the right to stand on Holy Ground.</p>
-                    <p>Football prints billions from collectibles. Golf has been sitting on this opportunity for 50 years and never touched it — because golf never had <em>characters</em> worth collecting. Characters the crowd watched fight for something. <strong>Now it does.</strong></p>
-                    <p>A kid holds this card up at school and says: <em>"I was there when he made that shot. I watched those numbers go up live. I saw him go from nobody to Gladiator."</em></p>
-                    <p>That's not a fan. <strong>That's a fan for life. And he's bringing every friend he has.</strong></p>
-                    <div class="rf-tag">13 Teams · 13 Gladiators · 13 Cards · Fox Sports Weekly</div>
+        <!-- ═══════════════════════════════════
+             PILLAR 3 — THE CONTRACT
+        ═══════════════════════════════════ -->
+        <section class="scene" id="kings2">
+            <div class="scene-bg" style="background-image: url('contract-sign.webp');"></div>
+            <div class="scene-overlay overlay-gold"></div>
+            <div class="scene-content">
+                <p class="whisper">The moment everything changes.</p>
+                <h2 class="scene-title">The Contract</h2>
+                <p class="narrative">
+                    The winner doesn't get a handshake and a gift card. The winner sits down at a table on live television — cameras rolling, family in the front row, tears nobody's trying to hide — and signs a <strong>LIV Golf contract.</strong>
+                </p>
+                <p class="narrative">
+                    Feel the weight of the pen. Hear the click. Imagine your mother in the gallery — the woman who drove you to every range session, who worked doubles, who told you <em>"keep swinging"</em> when the world told you to get a real job — watching you write your name on a future she built with her bare hands.
+                </p>
+                <p class="narrative">
+                    The others don't go home empty. Scholarships. LIV-sponsored junior league entry. Hard work and dedication, fostered by a league that gave them a <strong>once-in-a-lifetime opportunity</strong> — not because of where they came from, but because of what they showed on Holy Ground.
+                </p>
+                <div class="pull-quote">
+                    "A green jacket. A LIV contract.<br>A path to destiny — earned, not inherited."
                 </div>
             </div>
+        </section>
 
-            <p class="s-body reveal rd6" style="margin-top: 44px;">
-                This is the <strong>self-regenerating engine.</strong> Every Gauntlet season produces new cards, new Gladiators, new telemetry moments that people replay for years. The franchise doesn't age — it compounds. <strong>Holy Ground, year after year after year. The seat will never be empty again.</strong>
-            </p>
-        </div>
-    </section>
+        <!-- ═══════════════════════════════════
+             PILLAR 4 — THE FRANCHISE ENGINE
+        ═══════════════════════════════════ -->
+        <section class="scene" id="franchise">
+            <div class="scene-bg" style="background-image: url('club-pass.webp');"></div>
+            <div class="scene-overlay overlay-deep"></div>
+            <div class="scene-content">
+                <p class="pillar-label">Pillar IV</p>
+                <h2 class="scene-title">The Franchise Engine</h2>
+                <div class="divider"></div>
+                <p class="narrative">
+                    Every Gladiator gets a <strong>Rookie Card.</strong> Not a headshot and a stat line — a living, breathing data profile. Upper Deck-style. Swing speed. Smash factor. Launch angle. Putt percentage under pressure. A new collectible asset class born on the fairway.
+                </p>
 
-    <!-- ════ PILLAR 4 BONUS: THE LEGACY OF GIVING ════ -->
-    <section class="story-section align-center" data-bg="club-pass.webp">
-        <div class="story-inner">
-            <span class="s-label reveal">The Horizon · The Legacy of Giving</span>
-            <h2 class="s-title reveal rd1">The Sky<br>Above It All</h2>
-            <div class="s-rule reveal rd2"></div>
-            <p class="s-lead reveal rd2">
-                "We teach the Aggressive Apprentice that a King's true power is his ability to sustain his community."
-            </p>
-            <p class="s-body reveal rd3">
-                The fourth pillar is not a column. It is the sky that covers the entire architecture. <strong>The Legacy of Giving</strong> is baked into every contract signed on Holy Ground — in that 1.0mm Blue-Black ink — as a Sacred Vow: a commitment to give back to the municipal courses that raised them.
-            </p>
-            <p class="s-body reveal rd3">
-                <strong>We instill the social tax from day one.</strong> Every Gladiator who wins a contract wins something else too: the responsibility of the platform. Kings don't just hoard the crown. They build the kingdom that comes after them. They fund the next range, the next Gauntlet, the next 17-year-old hitting drives in the dark.
-            </p>
-            <div class="s-quote reveal rd4">
-                <p>"We have identified the void. Filled it with living water. And blessed the ground. What remains is the league brave enough to light the match."</p>
+                <div class="card-showcase">
+                    <img src="rooke-card.png" alt="Gladiator Rookie Card" loading="lazy">
+                </div>
+
+                <p class="narrative">
+                    Fox Sports gets a weekly drama. LIV gets a generation. The 16-to-35 demographic that the PGA Tour has never captured and LIV hasn't locked yet — <em>this is how you get them.</em> Not with bigger purses for players they've never heard of. With stories they can't stop watching. With kids who look like them, sound like them, came from the same cracked parking lots and chain-link ranges.
+                </p>
+                <p class="narrative">
+                    Gladiators become franchises. Rookie cards become collectibles. Mentorship becomes content. <strong>Every episode is a pipeline to LIV 2027.</strong>
+                </p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ════ CLOSING: THE MISSING E ════ -->
-    <section id="s-closing" data-bg="live-golf.webp">
-        <span class="reveal" style="font-size:0.6rem; letter-spacing:9px; color:var(--gold-dim); text-transform:uppercase;">The Concept That Completes It</span>
+        <!-- ═══════════════════════════════════
+             CLOSING — THE MISSING E
+        ═══════════════════════════════════ -->
+        <section class="scene" id="closing">
+            <div class="scene-bg" style="background-image: url('live-golf.webp');"></div>
+            <div class="scene-overlay overlay-dark"></div>
+            <div class="scene-content">
+                <p class="whisper">L . I . V</p>
+                <div class="live-logo-wrap">
+                    <img src="live.png" alt="LIVE — The Missing E in LIV">
+                </div>
+                <h2 class="scene-title">The Missing E</h2>
+                <div class="divider"></div>
+                <p class="narrative">
+                    LIV built a kingdom. The Kings have their crowns. The purses are the biggest in golf. The stages are global. The production is world-class.
+                </p>
+                <p class="narrative">
+                    But a kingdom without a next generation is a kingdom with an expiration date. And entertainment without emotion is just content.
+                </p>
+                <p class="narrative">
+                    <strong>Kings of the Green</strong> is the entertainment engine that makes LIV <em>LIVE.</em> It's the farm system. The proving ground. The feeder league for a new era of professional golf — built for the kids who were never invited, on Holy Ground where greatness is forged, not bought.
+                </p>
+                <div class="pull-quote">
+                    "You gave us a shot.<br>We found the bottom of the cup.<br>And nothing will ever be the same."
+                </div>
+                <p class="kicker">Kings of the Green &bull; Junior Gladiators on the Fairway</p>
+                <p class="kicker" style="margin-top: 8px;">Concept by Powell Parker &bull; powparker.com</p>
+            </div>
+        </section>
 
-        <div class="live-wrap reveal rd1">
-            <span class="ltr">L</span><span class="ltr">I</span><span class="ltr">V</span><span class="ltr-ghost" id="e-ltr">E</span>
-        </div>
+    </div><!-- /mainContent -->
 
-        <div class="closing-divider reveal rd2">
-            <span>The Missing E</span>
-        </div>
+    <footer>
+        <p>&copy; 2026 Kings of the Green &bull; Confidential Concept Brief &bull; All Rights Reserved</p>
+    </footer>
 
-        <p class="closing-lead reveal rd2">
-            LIV has the Kings. What it was missing was the <em>E</em> — the Entertainment engine. The emotion. The story still being written. <strong>The thing that makes it truly LIVE.</strong>
-        </p>
+    <!-- ═══════════════════════════════════════
+         JAVASCRIPT
+    ═══════════════════════════════════════ -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
 
-        <p class="closing-body reveal rd3">
-            Golf is losing the next generation. Not because the sport isn't beautiful — it is. Not because the competition isn't fierce — it is. But because the game has been <strong>locked behind velvet ropes, country club memberships, and a broadcast model that hasn't evolved since 1960.</strong>
-        </p>
+        /* ---- PASSWORD GATE ---- */
+        var gate = document.getElementById('gate');
+        var gateInput = document.getElementById('gateInput');
+        var gateBtn = document.getElementById('gateBtn');
+        var gateError = document.getElementById('gateError');
+        var mainContent = document.getElementById('mainContent');
 
-        <p class="closing-manifesto reveal rd4">
-            "Holy Ground tears those ropes down. The Gauntlet opens the door. The Kings pass the wisdom. The Gladiators carry the torch. And LIVE Golf becomes the destination — not because it's where the money is, but because it's <em>where legends are made.</em>"
-        </p>
-
-        <p class="closing-body reveal rd5">
-            <strong>LIV has the Kings. We have the Gladiators. Together, we have the future of golf.</strong> The grandstands fill. The torches pass. The Gladiators rise. And the game that was born on the links of Scotland finds its future on the muni courses of America. <strong>The window is open. The Kings are waiting. The Gladiators are ready.</strong>
-        </p>
-
-        <p class="closing-body reveal rd6" style="color: var(--gold-dim);">
-            Who builds it first?
-        </p>
-
-        <div class="reveal rd6" style="margin-top: 16px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
-            <div style="width: 40px; height: 1px; background: var(--gold-dim);"></div>
-            <p class="closing-sig">Kings of the Green · A Concept by Powell Parker · Confidential</p>
-        </div>
-    </section>
-
-</div><!-- /main -->
-
-<script>
-    // ── GATE ──
-    function checkPw(e) {
-        e.preventDefault();
-        const val = document.getElementById('pw-input').value.trim().toUpperCase();
-        if (val === 'KINGSGLADIATORS') {
-            const gate = document.getElementById('gate');
-            gate.style.transition = 'opacity 1.2s ease';
-            gate.style.opacity = '0';
-            setTimeout(() => {
-                gate.style.display = 'none';
-                document.getElementById('main').style.display = 'block';
-                initSite();
-            }, 1200);
-        } else {
-            const err = document.getElementById('pw-error');
-            err.textContent = 'Access denied.';
-            document.getElementById('pw-input').value = '';
-            setTimeout(() => err.textContent = '', 2500);
+        function checkPassword() {
+            var pw = gateInput.value.trim().toUpperCase();
+            if (pw === 'GLADIATORS') {
+                gate.classList.add('hidden');
+                mainContent.classList.add('visible');
+                initScrollReveal();
+                initNavDots();
+            } else {
+                gateError.textContent = 'ACCESS DENIED';
+                gateInput.value = '';
+                gateInput.focus();
+                setTimeout(function() { gateError.textContent = ''; }, 2000);
+            }
         }
-    }
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Enter' && document.getElementById('gate').style.display !== 'none') {
-            const form = document.getElementById('gate-form');
-            if (form) checkPw(new Event('submit'));
-        }
-    });
 
-    function initSite() {
-        const bgLayer = document.getElementById('bg-layer');
-        const allSections = document.querySelectorAll('[data-bg]');
-        const dots = document.querySelectorAll('.ndot');
-        const revealEls = document.querySelectorAll('.reveal');
-        let eLit = false;
-
-        // ── BG switcher ──
-        const bgObs = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                const bg = entry.target.getAttribute('data-bg');
-                if (bg) {
-                    const img = new Image();
-                    img.src = bg;
-                    img.onload = () => bgLayer.style.backgroundImage = `url('${bg}')`;
-                }
-                // Dots
-                const id = entry.target.id;
-                if (id) {
-                    dots.forEach(d => d.classList.remove('active'));
-                    const match = document.querySelector(`[data-s="${id}"]`);
-                    if (match) match.classList.add('active');
-                }
-            });
-        }, { threshold: 0.25 });
-
-        allSections.forEach(s => bgObs.observe(s));
-
-        // ── Reveal on scroll ──
-        const revObs = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('in');
-            });
-        }, { threshold: 0.1 });
-
-        revealEls.forEach(el => revObs.observe(el));
-
-        // ── E Letter reveal ──
-        const closingObs = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !eLit) {
-                    eLit = true;
-                    setTimeout(() => {
-                        const e = document.getElementById('e-ltr');
-                        if (e) {
-                            e.classList.remove('ltr-ghost');
-                            e.classList.add('ltr-lit');
-                        }
-                    }, 900);
-                }
-            });
-        }, { threshold: 0.4 });
-
-        const closing = document.getElementById('s-closing');
-        if (closing) closingObs.observe(closing);
-
-        // ── Dot navigation ──
-        dots.forEach(d => {
-            d.addEventListener('click', () => {
-                const target = document.getElementById(d.getAttribute('data-s'));
-                if (target) target.scrollIntoView({ behavior: 'smooth' });
-            });
+        gateBtn.addEventListener('click', checkPassword);
+        gateInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') checkPassword();
         });
 
-        // ── Set initial BG ──
-        bgLayer.style.backgroundImage = `url('empty-stands.webp')`;
-    }
-</script>
+        /* ---- SCROLL REVEAL ---- */
+        function initScrollReveal() {
+            var scenes = document.querySelectorAll('.scene');
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: '0px 0px -60px 0px'
+            });
+
+            scenes.forEach(function(scene) {
+                observer.observe(scene);
+            });
+        }
+
+        /* ---- NAV DOTS ---- */
+        function initNavDots() {
+            var dots = document.querySelectorAll('.nav-dot');
+            var sections = [];
+
+            dots.forEach(function(dot) {
+                var targetId = dot.getAttribute('data-target');
+                var section = document.getElementById(targetId);
+                if (section) sections.push({ dot: dot, section: section });
+
+                dot.addEventListener('click', function() {
+                    var target = document.getElementById(targetId);
+                    if (target) target.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            window.addEventListener('scroll', function() {
+                var scrollPos = window.scrollY + window.innerHeight / 2;
+
+                sections.forEach(function(item) {
+                    var top = item.section.offsetTop;
+                    var bottom = top + item.section.offsetHeight;
+                    if (scrollPos >= top && scrollPos < bottom) {
+                        dots.forEach(function(d) { d.classList.remove('active'); });
+                        item.dot.classList.add('active');
+                    }
+                });
+            });
+        }
+
+        /* Auto-focus password field */
+        gateInput.focus();
+    });
+    </script>
+
 </body>
 </html>
