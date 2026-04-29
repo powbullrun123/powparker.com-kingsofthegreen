@@ -56,3 +56,66 @@ body, html {
 .pivot {
     background: radial-gradient(circle, var(--dark-green) 0%, var(--navy) 100%);
 }
+#gate {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 24px;
+    background: url('empty-stands.webp') center center / cover no-repeat fixed;
+    position: relative;
+}
+
+#gate::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(7, 16, 24, 0.75);
+    z-index: 1;
+}
+
+#gate > * {
+    position: relative;
+    z-index: 2;
+}
+
+.gate-contact {
+    margin-top: 32px;
+    text-align: center;
+}
+
+.gate-restricted {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 12px;
+}
+
+.gate-phone {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.7;
+}
+
+.gate-phone strong {
+    color: var(--gold);
+    font-size: 1.1rem;
+    display: block;
+    margin-top: 4px;
+}
+
+.gate-phone a {
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 1.2rem;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+}
+
+.gate-phone a:hover {
+    color: #E8D5A3;
+}
