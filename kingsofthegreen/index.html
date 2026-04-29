@@ -295,9 +295,9 @@
 
         .s-body {
             font-family: 'Lato', sans-serif;
-            font-size: clamp(0.9rem, 1.4vw, 1.05rem);
-            font-weight: 300;
-            color: var(--grey);
+            font-size: clamp(1rem, 1.6vw, 1.15rem);
+            font-weight: 400;
+            color: #B8B8AC;
             line-height: 2.0;
             margin-bottom: 22px;
         }
@@ -534,8 +534,165 @@
             to   { opacity: 1; transform: scale(1); }
         }
 
+        /* ─── RYDER CUP TEAM GRID ─── */
+        .team-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 36px 0;
+        }
+
+        .team-card {
+            border: 1px solid rgba(201,168,76,0.2);
+            padding: 24px 20px;
+            background: rgba(5,14,24,0.6);
+            position: relative;
+        }
+
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px; height: 100%;
+            background: var(--gold);
+        }
+
+        .team-card .tc-role {
+            font-size: 0.6rem;
+            letter-spacing: 5px;
+            color: var(--gold-dim);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .team-card .tc-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+
+        .team-card .tc-desc {
+            font-size: 0.88rem;
+            font-weight: 300;
+            color: var(--grey);
+            line-height: 1.7;
+        }
+
+        /* ─── GAUNTLET LIVE DISPLAY ─── */
+        .gauntlet-hud {
+            background: rgba(5,14,24,0.85);
+            border: 1px solid rgba(201,168,76,0.25);
+            padding: 32px;
+            margin: 36px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gauntlet-hud::before {
+            content: '● LIVE';
+            position: absolute;
+            top: 14px; right: 18px;
+            font-size: 0.6rem;
+            letter-spacing: 4px;
+            color: #e74c3c;
+            font-weight: 700;
+            animation: livePulse 1.8s ease-in-out infinite;
+        }
+
+        @keyframes livePulse {
+            0%,100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .gauntlet-hud .hud-title {
+            font-size: 0.6rem;
+            letter-spacing: 7px;
+            color: var(--gold-dim);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .hud-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .hud-stat {
+            text-align: center;
+            padding: 16px 8px;
+            border: 1px solid rgba(201,168,76,0.12);
+        }
+
+        .hud-stat .hs-val {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.4rem, 2.5vw, 2rem);
+            font-weight: 700;
+            color: var(--gold);
+            display: block;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .hud-stat .hs-label {
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            color: var(--grey);
+            text-transform: uppercase;
+            line-height: 1.4;
+        }
+
+        /* ─── ROOKIE CARD FEATURE UPGRADED ─── */
+        .rookie-feature {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 48px;
+            align-items: start;
+            margin: 40px 0;
+        }
+
+        .rookie-feature img {
+            width: 100%;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 40px rgba(201,168,76,0.1);
+        }
+
+        .rf-text h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.3rem, 2vw, 1.7rem);
+            color: var(--gold);
+            margin-bottom: 14px;
+            line-height: 1.2;
+        }
+
+        .rf-text p {
+            font-size: clamp(0.92rem, 1.4vw, 1.05rem);
+            font-weight: 400;
+            color: #B8B8AC;
+            line-height: 1.9;
+            margin-bottom: 14px;
+        }
+
+        .rf-text p strong { color: var(--gold-light); font-weight: 700; }
+
+        .rf-text .rf-tag {
+            display: inline-block;
+            border: 1px solid rgba(201,168,76,0.3);
+            padding: 6px 16px;
+            font-size: 0.6rem;
+            letter-spacing: 3px;
+            color: var(--gold-dim);
+            text-transform: uppercase;
+            margin-top: 8px;
+        }
+
         /* ─── RESPONSIVE ─── */
         @media (max-width: 768px) {
+            .team-grid { grid-template-columns: 1fr; }
+            .hud-stats { grid-template-columns: 1fr 1fr; }
+            .rookie-feature { grid-template-columns: 1fr; }
             .story-inner { padding: 80px 28px; }
             .story-section.align-right .story-inner { padding: 80px 28px; }
             .story-section.align-center .story-inner { padding: 80px 28px; }
@@ -677,30 +834,49 @@
         </div>
     </section>
 
-    <!-- ════ PILLAR 3: KINGS & GLADIATORS ════ -->
+    <!-- ════ PILLAR 3: KINGS & GLADIATORS — RYDER CUP FORMAT ════ -->
     <section id="s-p3" class="story-section" data-bg="pass-torch.webp">
         <div class="story-inner">
             <span class="s-label reveal">Pillar Three · Activation &amp; The Coronation</span>
             <h2 class="s-title reveal rd1">Kings<br>&amp; Gladiators</h2>
             <div class="s-rule reveal rd2"></div>
             <p class="s-lead reveal rd2">
-                "The King prepares the Prince."
+                "The King prepares the Prince. The crowd finally has a reason to stand."
             </p>
             <p class="s-body reveal rd3">
-                This is where the format becomes a <strong>legacy play.</strong> The Kings — Phil, Bryson, Bubba, DJ — they don't just play the Legacy Pairings Championship. They <strong>mentor.</strong> Each Gladiator is paired with a King in a Ryder Cup team format that forces the veteran to invest everything he has left into a rookie's dream.
+                Here is how it works — and why it works. <strong>Every LIV King is paired with a Gladiator.</strong> Not a caddie. Not a brand ambassador. A <em>teammate.</em> They carry the same crest. They play under the same flag. And in the Ryder Cup team format, when the Gladiator wins — the King wins with him.
             </p>
             <p class="s-body reveal rd3">
-                When the King's Gladiator wins — the King wins too. <strong>Shared victory. Shared legacy.</strong> The veteran who spent years as a villain in the eyes of American golf fans becomes the man who found the next generation. The man who kneeled down in the 18th fairway under live television lights to adjust a Gladiator's grip. <strong>That's the moment that fills seats — and keeps them filled for a decade.</strong>
+                This is the structure that transforms a league full of individual stars into a <strong>team sport with rivalries, storylines, and stakes that carry from week to week.</strong> Fans don't just root for a player. They root for a pair. They watch a relationship develop in real time. They see a veteran teach. They see a rookie learn. They see the exact moment the student becomes the King.
             </p>
-            <div class="s-quote reveal rd4">
-                <p>"The Upper Deck Rookie Card. The Eagle Pen. The Living Legend Contract. We give them the vehicle, the equipment, and the sponsorship to compete immediately. The scholarship isn't just tuition — it's a Professional Infrastructure."</p>
+
+            <!-- RYDER CUP TEAM GRID -->
+            <div class="team-grid reveal rd4">
+                <div class="team-card">
+                    <span class="tc-role">The King</span>
+                    <div class="tc-name">The Veteran</div>
+                    <p class="tc-desc">Phil. Bryson. Bubba. DJ. The men who sacrificed their PGA standing to build something new. Now they invest their legacy in a Gladiator — and the crowd that once booed them starts to cheer.</p>
+                </div>
+                <div class="team-card">
+                    <span class="tc-role">The Gladiator</span>
+                    <div class="tc-name">The Rookie</div>
+                    <p class="tc-desc">The kid from the muni range. Smash factor 1.51. Carry distance 312 yards. Zero scouts, zero sponsorships, zero country club connections. One Gauntlet win away from a LIV contract.</p>
+                </div>
+                <div class="team-card">
+                    <span class="tc-role">The Format</span>
+                    <div class="tc-name">Ryder Cup Style</div>
+                    <p class="tc-desc">Team scoring. Shared victory. Shared heartbreak. The drama of national pride — transferred to the drama of mentorship. Two generations. One crest. Every point matters.</p>
+                </div>
+                <div class="team-card">
+                    <span class="tc-role">The Prize</span>
+                    <div class="tc-name">The Coronation</div>
+                    <p class="tc-desc">The Legacy Pairings Championship opens the 2027 LIV season. The winning pair receives matching green jackets on the 18th green — and the King hands the Gladiator his putter. On live television. In front of the world.</p>
+                </div>
             </div>
-            <p class="s-body reveal rd4">
-                This is the content no one is making. Not a highlight reel. Not a press conference. <strong>A relationship.</strong> A passing of craft. The veteran's silver hair next to the rookie's fire. Two generations of the same game — and one of them learning from the other in real time, on national television, in front of millions of people who never thought they'd care about golf.
-            </p>
-            <p class="s-body reveal rd5">
-                The <strong>Legacy Pairings Championship</strong> opens the 2027 LIV season. Not as a sideshow. As the headline. The event that reframes everything this league is — and who it's for. <strong>The King hands over the putter. The Gladiator takes the stage. The crowd finally has a reason to stand.</strong>
-            </p>
+
+            <div class="s-quote reveal rd5">
+                <p>"The veteran who spent years as a villain in American golf becomes the man who found the next generation. That's the content no one is making — not a highlight reel, not a press conference. A relationship. A passing of craft. <em>That's the moment that keeps those seats filled for a decade.</em>"</p>
+            </div>
         </div>
     </section>
 
@@ -711,33 +887,64 @@
         </div>
     </section>
 
-    <!-- ════ PILLAR 4: THE FRANCHISE ENGINE ════ -->
+    <!-- ════ PILLAR 4: THE GAUNTLET + ROOKIE CARD ════ -->
     <section id="s-p4" class="story-section align-right" data-bg="hit-ball.png">
         <div class="story-inner">
             <span class="s-label reveal">Pillar Four · The Franchise Engine</span>
-            <h2 class="s-title reveal rd1">The Franchise<br>Engine</h2>
+            <h2 class="s-title reveal rd1">The Gauntlet<br>&amp; The Card</h2>
             <div class="s-rule reveal rd2"></div>
             <p class="s-lead reveal rd2">
-                "Stats aren't data. They're a rookie card. They're a ticket. They're the infrastructure of a new asset class."
+                "You don't just compete in the Gauntlet. You get measured by it. And those numbers follow you forever."
             </p>
             <p class="s-body reveal rd3">
-                Every Gladiator who steps onto Holy Ground gets measured — not by handicap index, not by country club pedigree, not by legacy invitations. By <strong>what the ball does when he hits it.</strong> Swing speed. Smash factor. Launch angle. Carry distance. Putt percentage under pressure. <strong>NFL Combine-style metrics, brought to the fairway for the first time in history.</strong>
+                The Holy Ground Gauntlet is not a standard golf course. It is a <strong>HoleyMoley-style proving ground</strong> — a course built for maximum television drama, with <strong>live distractions, crowd interference zones, and pressure obstacles</strong> designed to reveal exactly what a Gladiator is made of when the cameras are rolling and the crowd is loud and nothing goes according to plan.
             </p>
             <p class="s-body reveal rd3">
-                Those numbers live on an <strong>Upper Deck Gladiator Rookie Card.</strong> Serialized. Holographic. Real. The kid from a muni range in Phoenix has a card. The walk-on from Lubbock has a card. The girl who qualified at a public range in Atlanta has a card. <strong>And when one of them wins — that card is worth something nobody predicted.</strong>
+                And while the Gladiator plays — the world watches the numbers. <strong>Every shot broadcast with real-time telemetry.</strong> Ball speed on screen before the ball lands. Carry distance the moment it stops. Smash factor. Launch angle. The audience doesn't just watch a swing — they understand it. They feel it. They argue about it. <strong>They become experts.</strong>
             </p>
-            <div class="card-feature reveal rd4">
-                <img src="rooke-card.png" alt="Gladiator Rookie Card — Upper Deck">
-                <div class="cft">
-                    <h3>The Gladiator Rookie Card</h3>
-                    <p>Upper Deck. Serialized. Real metrics from the Gauntlet — ball speed, smash factor, launch angle, putt percentage under pressure. Not a souvenir. <strong>A collectible asset class built from scratch.</strong></p>
-                    <p>Football prints billions from collectibles. Golf has been sitting on the same opportunity for 50 years and never touched it — because golf never had <em>characters</em> worth collecting. <strong>Now it does.</strong></p>
-                    <p>A kid holds this card up at school and says: <em>"I remember when he made that shot. I was there when he went from nobody to Gladiator."</em> That's not a fan. <strong>That's a fan for life.</strong></p>
-                    <p class="tag">13 LIV teams · 13 Gladiators · 13 Rookie Cards · Fox Sports Weekly Drama</p>
+
+            <!-- LIVE GAUNTLET HUD -->
+            <div class="gauntlet-hud reveal rd4">
+                <div class="hud-title">Holy Ground Gauntlet · Live Telemetry Display</div>
+                <div class="hud-stats">
+                    <div class="hud-stat">
+                        <span class="hs-val">183</span>
+                        <span class="hs-label">Ball Speed<br>MPH</span>
+                    </div>
+                    <div class="hud-stat">
+                        <span class="hs-val">1.52</span>
+                        <span class="hs-label">Smash<br>Factor</span>
+                    </div>
+                    <div class="hud-stat">
+                        <span class="hs-val">312</span>
+                        <span class="hs-label">Carry<br>Yards</span>
+                    </div>
+                    <div class="hud-stat">
+                        <span class="hs-val">94%</span>
+                        <span class="hs-label">Putt %<br>Under Pressure</span>
+                    </div>
                 </div>
             </div>
-            <p class="s-body reveal rd5" style="margin-top: 44px;">
-                This is the <strong>self-regenerating engine.</strong> Every Gauntlet season produces new cards, new Gladiators, new stories, new collectibles that appreciate in value as the Gladiators grow into Kings. The franchise doesn't age — it compounds. And every season, the Kings who mentored last year's winner are back to mentor this year's. <strong>Holy Ground, year after year after year.</strong>
+
+            <p class="s-body reveal rd4">
+                Those numbers don't disappear when the round ends. <strong>They live on the Gladiator Rookie Card.</strong> Every stat from every Gauntlet appearance — serialized, holographic, issued by Upper Deck to collectors and fans who watched those numbers get made in real time.
+            </p>
+
+            <!-- ROOKIE CARD FEATURE -->
+            <div class="rookie-feature reveal rd5">
+                <img src="rooke-card.png" alt="Gladiator Rookie Card — Holy Ground Gauntlet 2027">
+                <div class="rf-text">
+                    <h3>The Gladiator Rookie Card</h3>
+                    <p>Upper Deck. Serialized. Holographic. <strong>Every stat from the Gauntlet — real numbers from the real performance</strong> that earned this kid the right to stand on Holy Ground.</p>
+                    <p>Football prints billions from collectibles. Golf has been sitting on this opportunity for 50 years and never touched it — because golf never had <em>characters</em> worth collecting. Characters the crowd watched fight for something. <strong>Now it does.</strong></p>
+                    <p>A kid holds this card up at school and says: <em>"I was there when he made that shot. I watched those numbers go up live. I saw him go from nobody to Gladiator."</em></p>
+                    <p>That's not a fan. <strong>That's a fan for life. And he's bringing every friend he has.</strong></p>
+                    <div class="rf-tag">13 Teams · 13 Gladiators · 13 Cards · Fox Sports Weekly</div>
+                </div>
+            </div>
+
+            <p class="s-body reveal rd6" style="margin-top: 44px;">
+                This is the <strong>self-regenerating engine.</strong> Every Gauntlet season produces new cards, new Gladiators, new telemetry moments that people replay for years. The franchise doesn't age — it compounds. <strong>Holy Ground, year after year after year. The seat will never be empty again.</strong>
             </p>
         </div>
     </section>
