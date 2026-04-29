@@ -204,3 +204,88 @@ body, html {
     margin-top: 8px;
     min-height: 20px;
 }
+.gate-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 20px;
+}
+
+.gate-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    color: var(--white);
+    line-height: 1.05;
+    margin: 0 0 16px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+.gate-subtitle {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.5);
+    font-style: italic;
+    margin-bottom: 36px;
+    max-width: 480px;
+}
+
+.gate-input-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+#gateInput {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(197,160,89,0.35);
+    color: var(--white);
+    font-family: 'Georgia', serif;
+    font-size: 1rem;
+    padding: 14px 24px;
+    text-align: center;
+    width: 280px;
+    letter-spacing: 0.15em;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#gateInput::placeholder {
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+#gateInput:focus {
+    border-color: var(--gold);
+    background: rgba(197,160,89,0.06);
+}
+
+.gate-btn {
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    padding: 14px 40px;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.gate-btn:hover {
+    background: #E8D5A3;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(197,160,89,0.3);
+}
+
+.gate-error {
+    color: #ff4444;
+    font-size: 0.8rem;
+    margin-top: 8px;
+    min-height: 20px;
+}
